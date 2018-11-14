@@ -1,3 +1,4 @@
+require 'slack-ruby-bot'
 require 'slack-buggybot'
 require 'slack-buggybot/version'
 require 'slack-buggybot/about'
