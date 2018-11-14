@@ -1,11 +1,11 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
-require 'bot/echo'
+require 'slack-buggybot'
 require 'web'
 
 Thread.new do
   begin
-    EchoBot.run
+    SlackBuggybot::Bot.run
   rescue Exception => e
     STDERR.puts "ERROR: #{e}"
     STDERR.puts e.backtrace
@@ -13,4 +13,4 @@ Thread.new do
   end
 end
 
-run EchoBot::Web
+run SlackBuggybot::Web
