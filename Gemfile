@@ -11,6 +11,9 @@ gem 'puma'
 gem 'sinatra'
 gem "octokit", "~> 4.0"
 
+gem 'pg'
+gem 'sequel'
+
 group :development, :test do
   gem 'rake', '~> 10.4'
   gem 'rubocop', '0.31.0'

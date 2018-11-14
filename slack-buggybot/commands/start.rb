@@ -1,4 +1,5 @@
 require 'slack-buggybot/issue-finder'
+require 'slack-buggybot/database'
 
 module SlackBuggybot
   module Commands
@@ -7,6 +8,14 @@ module SlackBuggybot
 
       def self.call(client, data, match)
         url = match['expression']
+
+        # Don't let people run more than one event at once.
+        current_events = SlackBuggybot::Database.database[:events].where(owner: data[:user])
+        if current_events.count > 0
+          client.say(channel: data.channel, text: "You already have an event in progress.")
+          return
+        end
+
         # Not sure why but the expression is surrounded by angle brackets
         url.gsub!(/[\>\<]/, "")
         issues = SlackBuggybot::IssueFinder.find(url)
