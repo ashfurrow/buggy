@@ -7,7 +7,9 @@ module SlackBuggybot
 
       def self.call(client, data, match)
         url = match['expression']
-        issues = IssueFinder.find(url)
+        # Not sure why but the expression is surrounded by angle brackets
+        url.gsub!(/[\>\<]/, "")
+        issues = SlackBuggybot::IssueFinder.find(url)
         user = client.users[data[:user]]
         if issues.empty?
           client.say(channel: data.channel, text: "Couldn't find any issues at #{url}")

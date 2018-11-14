@@ -9,6 +9,7 @@ gem 'celluloid-io'
 
 gem 'puma'
 gem 'sinatra'
+gem "octokit", "~> 4.0"
 
 group :development, :test do
   gem 'rake', '~> 10.4'
