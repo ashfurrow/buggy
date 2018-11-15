@@ -5,27 +5,38 @@ require "sequel"
 module SlackBuggybot
   class Database
     def self.database
-      @_db ||= Sequel.connect(ENV["DATABASE_URL"])
-
-      unless @_db.table_exists?("events")
-        @_db.create_table :events do
-          primary_key :id
-          DateTime :start
-          String :owner
+      db.transaction do
+        unless db.table_exists?("events")
+          db.create_table :events do
+            primary_key :id
+            DateTime :start
+            String :owner
+          end
         end
-      end
 
-      unless @_db.table_exists?("bugs")
-        @_db.create_table :bugs do
-          primary_key :id
-          foreign_key :event_id, :events
-          String :url, null: false
-          String :assignee
-          DateTime :completed
+        unless db.table_exists?("bugs")
+          db.create_enum(:event_state, %w(ready wip done))
+          db.create_table :bugs do
+            primary_key :id
+            foreign_key :event_id, :events
+            String :url, null: false
+            String :assignee
+            DateTime :completed
+            event_state :state, default: 'ready'
+          end
         end
-      end
 
-      return @_db
+        return db
+      end
+    end
+
+    private
+    def self.db
+      if @_db.nil?
+        @_db = Sequel.connect(ENV["DATABASE_URL"])
+        @_db.extension :pg_enum
+      end
+      @_db
     end
   end
 end
