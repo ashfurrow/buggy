@@ -1,7 +1,7 @@
 module SlackBuggybot
   ABOUT = <<~EOS
-    #{SlackBuggybot::VERSION}
+    Buggybot (#{SlackBuggybot::VERSION})
+    Get help with the default `buggy` command.
     https://github.com/ashfurrow/buggy
-    https://twitter.com/ashfurrow
   EOS
 end

@@ -43,7 +43,7 @@ module SlackBuggybot
       def self.join(client:, event:, user:, channel:)
         event.update(users: event.users + [user.id])
         client.say(channel: channel, text: "You have joined the event!")
-        # TODO: Call next command to assign bug.
+        # TODO: Assign them a bug.
       end
     end
   end
