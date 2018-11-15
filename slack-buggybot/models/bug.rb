@@ -5,15 +5,26 @@ SlackBuggybot::Database.database
 module SlackBuggybot
   class Bug < Sequel::Model
     def self.ready
-      return self.where(state: 'ready')
+      self.where(state: 'ready')
     end
 
-    def self.user_existing_bug(user_id:)
-      event = Event.user_current_event(user_id: user_id)
-      raise "User isn't in event." if event.nil?
-      Bug.where(assignee: user_id).first
+    def self.wip
+      self.where(state: 'wip')
+    end
+    
+    def self.in_event(event_id)
+      self.where(event_id: event_id)
     end
 
+    def self.user_existing_bug(user_id:, event_id:)
+      Bug.in_event(event_id).where(state: 'wip').where(assignee: user_id).first
+    end
+
+    def self.user_finished_bugs(user_id:, event_id:)
+      Bug.in_event(event_id).where(assignee: user_id).where(Sequel.~(completed: nil))
+    end
+
+    # Instance methods
     def assign(user_id:)
       self.update(assignee: user_id, state: 'wip')
       self.save
