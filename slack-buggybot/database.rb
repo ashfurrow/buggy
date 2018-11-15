@@ -9,10 +9,10 @@ module SlackBuggybot
         unless db.table_exists?("events")
           db.create_table :events do
             primary_key :id
-            DateTime :start
+            DateTime :start, null: false
             DateTime :end
-            String :owner
-            column 'users', 'text[]'
+            String :owner, null: false
+            column 'users', 'text[]', null: false, default: []
           end
         end
 
