@@ -17,7 +17,7 @@ module SlackBuggybot
             .join(',')
         end
         
-        client.issues(repo, options).map { |i| i.url }
+        client.issues(repo, options).map { |i| i.html_url }
       end
     end
   end
