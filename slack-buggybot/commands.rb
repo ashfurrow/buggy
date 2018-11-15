@@ -4,3 +4,5 @@ require 'slack-buggybot/commands/start'
 require 'slack-buggybot/commands/end'
 require 'slack-buggybot/commands/events'
 require 'slack-buggybot/commands/next'
+# TODO: Add a scoreboard command.
+# TODO: Add a points command.
