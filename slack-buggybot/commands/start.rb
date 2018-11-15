@@ -39,7 +39,9 @@ module SlackBuggybot
               Bug.new(event_id: event.id, url: url).save
             end
           end
-          message = "Started hackathon for #{user.real_name} with #{issues.length} issues!"
+          # TODO: This should include the URL for all the issues.
+          message = "Started hackathon for #{user.real_name} with #{issues.length} issues!\n"
+          message += "Check out all the issues here: #{url}"
           client.say(channel: data.channel, text: message)
           client.say(channel: channel.id, text: message)
           unless channel.member? client.self.id
