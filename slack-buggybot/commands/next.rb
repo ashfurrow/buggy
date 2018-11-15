@@ -37,9 +37,9 @@ module SlackBuggybot
           fate = 'ready'
           message = 'is passing on'
         when nil
-          raise 'You need to give the status of your current bug to get a new one. See `buggy help` for more info.'
+          raise 'You need to give the status of your current bug to get a new one. Type `buggy next [fixed, docs, verified, interlinked, none]`'
         else
-          raise 'You need to provide a status in `[fixed, docs, verified, interlinked, none]`.'
+          raise 'You need to provide a status in `[fixed, docs, verified, interlinked, none]`'
         end
 
         SlackBuggybot::Database.database.transaction do
