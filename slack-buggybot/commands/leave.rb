@@ -14,6 +14,7 @@ module SlackBuggybot
             .update(users: existing_event.users - [user.id])
             .save
           client.say(channel: data.channel, text: "Okay, you've left #{existing_event.name_from_client(client)}.")
+          # Purposefully not announcing when people leave.
         end
       rescue StandardError => e
         client.say(channel: data.channel, text: "Sorry, an oop happened: #{e.message}.")

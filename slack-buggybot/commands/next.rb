@@ -19,18 +19,23 @@ module SlackBuggybot
 
         # Parse their match.expression for the fate of their current bug
         fate = 'fixed'
+        message = 'fixed'
         case match[:expression]
         when 'fixed'
           # Nop, it's the default
         when 'docs'
           fate = 'added_docs'
+          message = 'added docs to'
         when 'verified'
           fate = 'verified'
+          message = 'verified the existence of'
         when 'interlinked'
           fate = 'interlinked'
+          message = 'added context to'
         when 'none'
           # Mark the bug as ready for someone else.
           fate = 'ready'
+          message = 'is passing on'
         when nil
           raise 'You need to give the status of your current bug to get a new one. See `buggy help` for more info.'
         else
@@ -41,6 +46,8 @@ module SlackBuggybot
           # Update their current bug
           current_bug = Bug.user_existing_bug(user_id: user.id, event_id: event.id)
           current_bug.update(state: fate, completed: DateTime.now.utc)
+
+          client.say(channel: event.channel_id, text: "<@#{data[:user]}> #{message} #{current_bug.url}")
 
           # Assign them a new bug
           new_bug = Bug.ready.all.sample
