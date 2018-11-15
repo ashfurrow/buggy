@@ -20,7 +20,7 @@ module SlackBuggybot
             #{event.leaderboard_from_client(client)}
           EOS
           client.say(channel: event.channel_id, text: announcement)
-          client.say(channel: data.channel, text: "All done!")
+          client.say(channel: data.channel, text: "All done!\n" + announcement)
         end
       rescue StandardError => e
         client.say(channel: data.channel, text: "Sorry, an oop happened: #{e.message}.")
