@@ -8,8 +8,20 @@ module SlackBuggybot
       self.where(state: 'ready')
     end
 
+    def self.ready_in_event(event_id)
+      return self.ready.where(event_id: event_id)
+    end
+
+    def self.remaining_in_event(event_id)
+      return self.where(event_id: event_id).where(state: %w(ready wip))
+    end
+
     def self.wip
       self.where(state: 'wip')
+    end
+
+    def self.done_in_event(event_id)
+      self.where(state: %w(fixed added_docs verified interlinked))
     end
     
     def self.in_event(event_id)

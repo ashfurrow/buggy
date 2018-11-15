@@ -9,12 +9,17 @@ module SlackBuggybot
       def self.call(client, data, match)
         user = client.users[data[:user]]
 
-        current_events = Event.open.where(owner: user.id)
-        if current_events.count == 0
+        event = Event.open.where(owner: user.id).first
+        if event.nil?
           client.say(channel: data.channel, text: "You don't have an event in progress.")
         else
           # TODO: Print final leaderboard
-          current_events.each { |e| e.update(end: Time.now.utc).save }
+          event.update(end: Time.now.utc).save
+          announcement = <<~EOS
+            #{event.name_from_client(client)} is over! Here is the final leaderboard (#{Bug.done_in_event(event.id).count} fixed, #{Bug.remaining_in_event(event.id).count} unfinished):
+            #{event.leaderboard_from_client(client)}
+          EOS
+          client.say(channel: event.channel_id, text: announcement)
           client.say(channel: data.channel, text: "All done!")
         end
       rescue StandardError => e

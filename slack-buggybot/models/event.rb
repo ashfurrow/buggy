@@ -42,5 +42,9 @@ module SlackBuggybot
         .reverse
         .map { |a| [a[0].real_name, a[1]]}
     end
+
+    def leaderboard_from_client(client)
+      self.sorted_user_names_and_points_from_client(client).map { |a| "#{a[0]}: #{a[1]} point#{a[1] == 1 ? '' : 's'}" }.join("\n")
+    end
   end
 end

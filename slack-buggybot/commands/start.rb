@@ -41,9 +41,8 @@ module SlackBuggybot
           end
           message = "Started hackathon for #{user.real_name} with #{issues.length} issues!"
           client.say(channel: data.channel, text: message)
-          if channel.member? client.self.id
-            client.say(channel: channel.id, text: message)
-          else
+          client.say(channel: channel.id, text: message)
+          unless channel.member? client.self.id
             client.say(channel: data.channel, text: "Please make sure that buggy is invited to ##{channel.name}.")
           end
         end

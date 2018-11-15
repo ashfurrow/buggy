@@ -9,7 +9,7 @@ module SlackBuggybot
 
         event = Event.user_current_event(user_id: user.id)
         # Maybe the user is asking for an event they created, but didn't join.
-        event ||= Event.open.where(owner: user.id)
+        event ||= Event.open.where(owner: user.id).first
         # Maybe the user specified an event with match data
         event ||= Event.find_from_match(match)
         if event.nil?
@@ -18,8 +18,8 @@ module SlackBuggybot
         end
         
         message = <<~EOS
-        Leaderboard for #{event.name_from_client(client)} (#{Bug.ready.where(event_id: event.id).count} remaining):
-        #{event.sorted_user_names_and_points_from_client(client).map { |a| "#{a[0]}: #{a[1]} point#{a[1] == 1 ? '' : 's'}" }.join("\n")}
+        Leaderboard for #{event.name_from_client(client)} (#{Bug.done_in_event(event.id).count} fixed, #{Bug.remaining_in_event(event.id).count} remaining):
+        #{event.leaderboard_from_client(client)}
         EOS
         
         client.say(channel: data.channel, text: message)
