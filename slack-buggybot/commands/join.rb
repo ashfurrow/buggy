@@ -15,28 +15,17 @@ module SlackBuggybot
           return
         end
 
-        if Event.open.count == 0
+        unless Event.open.count > 0
           client.say(channel: data.channel, text: 'There are no events right now. Start one with `buggy start`.')
-          return
-        elsif Event.open.count == 1
-          join(client: client, event: Event.open.first, user: user, channel: data.channel)
           return
         end
 
-        if match[:expression].nil?
-          # No bug bash index was specified, so fail.
-          client.say(channel: data.channel, text: "There's more than one bug bash ongoing, please specify which one you want with `buggy join ID`.")
-          SlackBuggybot::Commands::Events.call(client, data, match)
+        event = Event.find_from_match(match)
+        unless event.nil?
+          join(client: client, event: Event.open.first, user: user, channel: data.channel)
         else
-          pk = match[:expression].to_i
-          event = Event.open[pk]
-          if event.nil?
-            client.say(channel: data.channel, text: "Couldn't find an event with id #{pk}.")
-            SlackBuggybot::Commands::Events.call(client, data, match)
-          else
-            join(client: client, event: event, user: user, channel: data.channel)
-          end
-          # binding.irb
+          client.say(channel: data.channel, text: "Couldn't find an event with id #{match[:expression]}.")
+          SlackBuggybot::Commands::Events.call(client, data, match)
         end
       end
       

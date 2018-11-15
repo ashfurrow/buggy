@@ -5,5 +5,6 @@ require 'slack-buggybot/commands/end'
 require 'slack-buggybot/commands/events'
 require 'slack-buggybot/commands/next'
 require 'slack-buggybot/commands/join'
-# TODO: Add a scoreboard command.
-# TODO: Add a points command.
+require 'slack-buggybot/commands/leave'
+
+# TODO: Once the commands are done, they need to post to the event channel (when someone fixes a bug or joins, etc)
