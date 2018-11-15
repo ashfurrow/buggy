@@ -32,13 +32,19 @@ module SlackBuggybot
         if issues.empty?
           client.say(channel: data.channel, text: "Couldn't find any issues at #{url}")
         else
-          client.say(channel: data.channel, text: "Starting hackathon for #{user.real_name} with #{issues.length} issues!")
           SlackBuggybot::Database.database.transaction do
             event = Event.new(start: Time.now.utc, owner: user.id, channel_id: channel.id)
             event.save
             issues.each do |url|
               Bug.new(event_id: event.id, url: url).save
             end
+          end
+          message = "Started hackathon for #{user.real_name} with #{issues.length} issues!"
+          client.say(channel: data.channel, text: message)
+          if channel.member? client.self.id
+            client.say(channel: channel.id, text: message)
+          else
+            client.say(channel: data.channel, text: "Please make sure that buggy is invited to ##{channel.name}.")
           end
         end
       rescue StandardError => e
