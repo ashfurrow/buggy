@@ -18,7 +18,7 @@ module SlackBuggybot
         end
         
         message = <<~EOS
-        Leaderboard for #{event.name_from_client(client)}:
+        Leaderboard for #{event.name_from_client(client)} (#{Bug.ready.where(event_id: event.id).count} remaining):
         #{event.sorted_user_names_and_points_from_client(client).map { |a| "#{a[0]}: #{a[1]} point#{a[1] == 1 ? '' : 's'}" }.join("\n")}
         EOS
         
