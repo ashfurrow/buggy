@@ -1,5 +1,4 @@
 require 'slack-buggybot/models/event'
-require 'slack-buggybot/models/event'
 require 'slack-buggybot/models/bug'
 
 module SlackBuggybot
@@ -10,7 +9,6 @@ module SlackBuggybot
 
         existing_event = Event.user_current_event(user_id: user.id)
         unless existing_event.nil?
-          owner = client.users[existing_event.owner]
           client.say(channel: data.channel, text: "You're already in #{existing_event.name_from_client(client)}. Leave it with `buggy leave`.")
           return
         end
@@ -33,7 +31,9 @@ module SlackBuggybot
       
       def self.join(client:, event:, user:, channel:)
         SlackBuggybot::Database.database.transaction do
-          event.update(users: event.users + [user.id])
+          event
+            .update(users: event.users + [user.id])
+            .save
           client.say(channel: channel, text: "You have joined #{event.name_from_client(client)}!")
           new_bug = Bug.ready.all.sample
           if new_bug.nil?
