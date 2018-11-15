@@ -21,7 +21,7 @@ module SlackBuggybot
     end
 
     def self.done_in_event(event_id)
-      self.where(state: %w(fixed added_docs verified interlinked))
+      self.where(event_id: event_id).where(state: %w(fixed added_docs verified interlinked))
     end
     
     def self.in_event(event_id)
