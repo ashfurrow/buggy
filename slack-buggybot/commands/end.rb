@@ -6,8 +6,6 @@ require 'slack-buggybot/models/bug'
 module SlackBuggybot
   module Commands
     class End < SlackRubyBot::Commands::Base
-      command 'end'
-
       def self.call(client, data, match)
         user = client.users[data[:user]]
 

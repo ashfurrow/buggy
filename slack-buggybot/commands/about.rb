@@ -1,7 +1,7 @@
 module SlackBuggybot
   module Commands
-    class Default < SlackRubyBot::Commands::Base
-      match(/^(?<buggy>\w*)$/) do |client, data, _match|
+    class About < SlackRubyBot::Commands::Base
+      def self.call(client, data, match)
         client.say(channel: data.channel, text: SlackBuggybot::ABOUT)
       end
     end

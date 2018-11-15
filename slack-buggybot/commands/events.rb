@@ -5,8 +5,6 @@ require 'slack-buggybot/models/bug'
 module SlackBuggybot
   module Commands
     class Events < SlackRubyBot::Commands::Base
-      command 'events'
-
       def self.call(client, data, match)
         if Event.open.count == 0
           client.say(channel: data.channel, text: 'There are no events right now. Start one with `buggy start`.')

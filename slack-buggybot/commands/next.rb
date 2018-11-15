@@ -5,7 +5,7 @@ module SlackBuggybot
   module Commands
     class Next < SlackRubyBot::Commands::Base
       command 'next'
-      # TODO: gimme alias or something.
+      command 'gimme'
 
       def self.call(client, data, match)
         user = client.users[data[:user]]

@@ -6,8 +6,6 @@ require 'slack-buggybot/models/bug'
 module SlackBuggybot
   module Commands
     class Start < SlackRubyBot::Commands::Base
-      command 'start'
-
       def self.call(client, data, match)
         url = match['expression']
         user = client.users[data[:user]]
