@@ -14,7 +14,7 @@ module SlackBuggybot
           client.say(channel: data.channel, text: "You don't have an event in progress.")
         else
           # TODO: Print final leaderboard
-          current_events.each { |e| e.update(end: Time.now.utc) }
+          current_events.each { |e| e.update(end: Time.now.utc).save }
           client.say(channel: data.channel, text: "All done!")
         end
       rescue StandardError => e

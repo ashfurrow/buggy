@@ -19,9 +19,9 @@ module SlackBuggybot
         end
 
         # Don't let people run more than one event at once.
-        current_events = Event.where(owner: user.id)
+        current_events = Event.open.where(owner: user.id)
         if current_events.count > 0
-          client.say(channel: data.channel, text: "You already have an event in progress.")
+          client.say(channel: data.channel, text: "You already have an event in progress: #{current_events.first.name_from_client(client)}.")
           return
         end
 

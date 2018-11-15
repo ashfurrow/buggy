@@ -39,8 +39,8 @@ module SlackBuggybot
 
         SlackBuggybot::Database.database.transaction do
           # Update their current bug
-          current_bug = Bug.user_existing_bug(user_id: user.id)
-          current_bug.update(state: fate)
+          current_bug = Bug.user_existing_bug(user_id: user.id, event_id: event.id)
+          current_bug.update(state: fate, completed: DateTime.now.utc)
 
           # Assign them a new bug
           new_bug = Bug.ready.all.sample
