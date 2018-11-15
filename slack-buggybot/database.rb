@@ -12,6 +12,7 @@ module SlackBuggybot
             DateTime :start
             DateTime :end
             String :owner
+            column 'users', 'text[]'
           end
         end
 
@@ -36,6 +37,7 @@ module SlackBuggybot
       if @_db.nil?
         @_db = Sequel.connect(ENV["DATABASE_URL"])
         @_db.extension :pg_enum
+        @_db.extension :pg_array
       end
       @_db
     end

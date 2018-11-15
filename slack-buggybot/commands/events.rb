@@ -8,7 +8,7 @@ module SlackBuggybot
       command 'events'
 
       def self.call(client, data, match)
-        if Event.open.count > 0
+        if Event.open.count == 0
           client.say(channel: data.channel, text: 'There are no events right now. Start one with `buggy start`.')
           return
         end
