@@ -1,5 +1,7 @@
 require 'slack-buggybot/issue-finder'
 require 'slack-buggybot/database'
+require 'slack-buggybot/models/event'
+require 'slack-buggybot/models/bug'
 
 module SlackBuggybot
   module Commands
@@ -11,7 +13,7 @@ module SlackBuggybot
         user = client.users[data[:user]]
 
         # Don't let people run more than one event at once.
-        current_events = database[:events].where(owner: user.id)
+        current_events = Event.where(owner: user.id)
         if current_events.count > 0
           client.say(channel: data.channel, text: "You already have an event in progress.")
           return
@@ -25,19 +27,16 @@ module SlackBuggybot
           client.say(channel: data.channel, text: "Couldn't find any issues at #{url}")
         else
           client.say(channel: data.channel, text: "Starting hackathon for #{user.real_name} with #{issues.length} issues!")
-          database.transaction do
-            event_id = database[:events].insert(start: Time.now.utc, owner: user.id)
+          SlackBuggybot::Database.database.transaction do
+            event = Event.new(start: Time.now.utc, owner: user.id)
+            event.save
             issues.each do |url|
-              database[:bugs].insert(event_id: event_id, url: url)
+              Bug.new(event_id: event.id, url: url).save
             end
           end
         end
       rescue StandardError => e
         client.say(channel: data.channel, text: "Sorry, an oop happened: #{e.message}.")
-      end
-
-      def self.database
-        SlackBuggybot::Database.database
       end
     end
   end

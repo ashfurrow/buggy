@@ -1,6 +1,6 @@
-require "sequel"
+require 'sequel'
 
-# Taken from https://github.com/KrauseFx/mood/blob/master/database.rb
+# Taken originally from https://github.com/KrauseFx/mood/blob/master/database.rb
 
 module SlackBuggybot
   class Database
@@ -10,6 +10,7 @@ module SlackBuggybot
           db.create_table :events do
             primary_key :id
             DateTime :start
+            DateTime :end
             String :owner
           end
         end
