@@ -8,6 +8,11 @@ module SlackBuggybot
       return self.where(end: nil)
     end
 
+    def name_from_client(client)
+      owner_user = client.users[self.owner]
+      "#{owner_user.real_name}'s bug bash"
+    end
+
     def self.find_from_match(match)
       case Event.open.count
       when 0

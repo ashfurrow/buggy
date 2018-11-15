@@ -11,7 +11,7 @@ module SlackBuggybot
         existing_event = Event.open.all.find { |e| e.users.include? user.id }
         unless existing_event.nil?
           owner = client.users[existing_event.owner]
-          client.say(channel: data.channel, text: "You're already in #{owner.real_name}'s bug bash. Leave it with `buggy leave`.")
+          client.say(channel: data.channel, text: "You're already in #{existing_event.name_from_client(client)}. Leave it with `buggy leave`.")
           return
         end
 
@@ -31,7 +31,7 @@ module SlackBuggybot
       
       def self.join(client:, event:, user:, channel:)
         event.update(users: event.users + [user.id])
-        client.say(channel: channel, text: "You have joined the event!")
+        client.say(channel: channel, text: "You have joined #{event.name_from_client(client)}!")
         # TODO: Assign them a bug.
       end
     end
