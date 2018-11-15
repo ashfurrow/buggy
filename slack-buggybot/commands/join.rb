@@ -27,12 +27,22 @@ module SlackBuggybot
           client.say(channel: data.channel, text: "Couldn't find an event with id #{match[:expression]}.")
           SlackBuggybot::Commands::Events.call(client, data, match)
         end
+      rescue StandardError => e
+        client.say(channel: data.channel, text: "Sorry, an oop happened: #{e.message}.")
       end
       
       def self.join(client:, event:, user:, channel:)
-        event.update(users: event.users + [user.id])
-        client.say(channel: channel, text: "You have joined #{event.name_from_client(client)}!")
-        # TODO: Assign them a bug.
+        SlackBuggybot::Database.database.transaction do
+          event.update(users: event.users + [user.id])
+          client.say(channel: channel, text: "You have joined #{event.name_from_client(client)}!")
+          new_bug = Bug.ready.all.sample
+          if new_bug.nil?
+            client.say(channel: channel, text: "There are no more bugs!")
+          else
+            new_bug.assign(user_id: user.id)
+            client.say(channel: channel, text: "Welcome aboard! Here's your first bug: #{new_bug.url}")
+          end
+        end
       end
     end
   end

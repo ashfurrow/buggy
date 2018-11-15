@@ -14,7 +14,9 @@ module SlackBuggybot
       Bug.where(assignee: user_id).first
     end
 
-    def assign(assignee_id:)
+    def assign(user_id:)
+      self.update(assignee: user_id, state: 'wip')
+      self.save
     end
   end
 end
