@@ -8,7 +8,7 @@ module SlackBuggybot
       def self.call(client, data, match)
         user = client.users[data[:user]]
 
-        existing_event = Event.open.all.find { |e| e.users.include? user.id }
+        existing_event = Event.user_current_event(user_id: user.id)
         unless existing_event.nil?
           owner = client.users[existing_event.owner]
           client.say(channel: data.channel, text: "You're already in #{existing_event.name_from_client(client)}. Leave it with `buggy leave`.")

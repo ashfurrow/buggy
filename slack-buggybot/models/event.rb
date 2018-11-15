@@ -5,12 +5,11 @@ SlackBuggybot::Database.database
 module SlackBuggybot
   class Event < Sequel::Model
     def self.open
-      return self.where(end: nil)
+      self.where(end: nil)
     end
 
-    def name_from_client(client)
-      owner_user = client.users[self.owner]
-      "#{owner_user.real_name}'s bug bash"
+    def self.user_current_event(user_id:)
+      Event.open.all.find { |e| e.users.include? user_id }
     end
 
     def self.find_from_match(match)
@@ -27,6 +26,12 @@ module SlackBuggybot
           return Event.open[pk]
         end
       end
+    end
+
+    # Instance methods
+    def name_from_client(client)
+      owner_user = client.users[self.owner]
+      "#{owner_user.real_name}'s bug bash"
     end
   end
 end
