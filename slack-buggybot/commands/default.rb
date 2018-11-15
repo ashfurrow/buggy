@@ -1,7 +1,6 @@
 module SlackBuggybot
   module Commands
     class Default < SlackRubyBot::Commands::Base
-      # TODO: SlackRubyBot has built-in support for help menus, implement it.
       match(/^(?<buggy>\w*)$/) do |client, data, _match|
         help_message = <<~EOS
         Buggy usage:

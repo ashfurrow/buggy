@@ -55,7 +55,6 @@ module SlackBuggybot
             client.say(channel: data.channel, text: "There are no more bugs!")
           else
             new_bug.assign(user_id: user.id)
-            # TODO: These messages should be more cute.
             client.say(channel: data.channel, text: "Good work! Here's your next bug: #{new_bug.url}")
           end
         end

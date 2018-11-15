@@ -14,7 +14,14 @@ export DATABASE_URL='my something like postgres://localhost/buggy'
 
 Then run the server with `bundle exec puma`. It'll run a Sinatra server, but that's only to play nicely with Heroku. In reality, a thread has been spawned to connect to your Slack instance.
 
-Look for TODOs to see what's left to do.
+Left todo:
+
+- Jira integration
+- Make messages cuter
+- SlackRubyBot has built-in support for help menus, implement that.
+- Sentry integration
+- ...
+- Unit tests
 
 ## Resources
 
