@@ -33,5 +33,14 @@ module SlackBuggybot
       owner_user = client.users[self.owner]
       "#{owner_user.real_name}'s bug bash"
     end
+
+    def sorted_user_names_and_points_from_client(client)
+      users
+        .map { |u| client.users[u] }
+        .map { |u| [u, Bug.user_finished_bugs(user_id: u.id, event_id: self.id).count]}
+        .sort { |l, r| l[1] <=> r[1] }
+        .reverse
+        .map { |a| [a[0].real_name, a[1]]}
+    end
   end
 end

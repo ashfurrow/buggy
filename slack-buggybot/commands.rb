@@ -7,5 +7,6 @@ require 'slack-buggybot/commands/next'
 require 'slack-buggybot/commands/join'
 require 'slack-buggybot/commands/leave'
 require 'slack-buggybot/commands/points'
+require 'slack-buggybot/commands/leaderboard'
 
 # TODO: Once the commands are done, they need to post to the event channel (when someone fixes a bug or joins, etc)
