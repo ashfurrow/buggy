@@ -1,5 +1,4 @@
 require 'slack-buggybot/models/event'
-require 'slack-buggybot/models/event'
 require 'slack-buggybot/models/bug'
 
 module SlackBuggybot
@@ -15,7 +14,7 @@ module SlackBuggybot
         EOS
         Event.open.each do |e|
           owner = client.users[e.owner]
-          table += "#{owner.real_name}'s bug bash | #{Bug.ready.where(event_id: e.id).count} ready bugs"
+          table += "#{e.pk} | #{owner.real_name}'s bug bash | #{Bug.ready.where(event_id: e.id).count} ready bugs"
         end
         client.say(channel: data.channel, text: table)
       end
