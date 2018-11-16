@@ -60,7 +60,7 @@ module SlackBuggybot
             client.say(channel: data.channel, text: "There are no more bugs!")
           else
             new_bug.assign(user_id: user.id)
-            congrats = [
+            congrats = match[:expression] == 'none' ? 'No problem.' : [
               "Great work!",
               "Well done!",
               "Nice job!",
