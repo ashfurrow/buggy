@@ -1,7 +1,7 @@
 module SlackBuggybot
   module Commands
     class Default < SlackRubyBot::Commands::Base
-      match(/^(?<buggy>\w*)$/) do |client, data, _match|
+      match "buggy" do |client, data, _match|
         help_message = <<~EOS
         Buggy usage:
 
