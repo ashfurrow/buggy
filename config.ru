@@ -3,7 +3,9 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'slack-buggybot'
 require 'web'
 
-# TODO: Require env vars here.
+%w(SLACK_API_TOKEN GITHUB_ACCESS_TOKEN DATABASE_URL JIRA_EMAIL JIRA_TOKEN).each do |e|
+  raise "You need the #{e} environment variable defined." if ENV[e].nil?
+end
 
 Thread.new do
   begin
