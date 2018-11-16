@@ -16,10 +16,6 @@ module SlackBuggybot
       return self.where(event_id: event_id).where(state: %w(ready wip))
     end
 
-    def self.wip
-      self.where(state: 'wip')
-    end
-
     def self.done_in_event(event_id)
       self.where(event_id: event_id).where(state: %w(fixed added_docs verified interlinked))
     end
@@ -29,7 +25,8 @@ module SlackBuggybot
     end
 
     def self.user_existing_bug(user_id:, event_id:)
-      Bug.in_event(event_id).where(state: 'wip').where(assignee: user_id).first
+      # binding.irb
+      Bug.in_event(event_id).where(completed: nil).where(assignee: user_id).first
     end
 
     def self.user_finished_bugs(user_id:, event_id:)
@@ -38,6 +35,7 @@ module SlackBuggybot
 
     # Instance methods
     def assign(user_id:)
+      # binding.irb
       self.update(assignee: user_id, state: 'wip')
       self.save
     end

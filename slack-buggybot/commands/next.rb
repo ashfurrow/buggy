@@ -48,9 +48,11 @@ module SlackBuggybot
         SlackBuggybot::Database.database.transaction do
           # Update their current bug
           current_bug = Bug.user_existing_bug(user_id: user.id, event_id: event.id)
-          current_bug.update(state: fate, completed: DateTime.now.utc)
-
-          client.say(channel: event.channel_id, text: "#{emoji} <@#{data[:user]}> #{message} #{current_bug.url}")
+          unless current_bug.nil?
+            # They should always have a bug, but just in case ...
+            current_bug.update(state: fate, completed: DateTime.now.utc)
+            client.say(channel: event.channel_id, text: "#{emoji} <@#{data[:user]}> #{message} #{current_bug.url}")
+          end
 
           # Assign them a new bug
           new_bug = Bug.ready.all.sample
