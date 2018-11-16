@@ -47,6 +47,7 @@ module SlackBuggybot
           unless channel.member? client.self.id
             client.say(channel: data.channel, text: "Please make sure that buggy is invited to ##{channel.name}.")
           end
+          client.say(channel: data.channel, text: "Don't forget to `buggy join` if you want to help out!")
         end
       rescue StandardError => e
         client.say(channel: data.channel, text: "Sorry, an oop happened: #{e.message}.")
