@@ -30,3 +30,4 @@ Here are some things that've helped me:
 - [slack-ruby-bot](https://github.com/slack-ruby/slack-ruby-bot)
 - [sequel cheat sheet](https://github.com/jeremyevans/sequel/blob/master/doc/cheat_sheet.rdoc)
 - [Slack message formatting docs](https://api.slack.com/docs/message-formatting)
+- [Jira API docs](https://docs.atlassian.com/software/jira/docs/api/REST/7.12.3/#api/2/search-search)
