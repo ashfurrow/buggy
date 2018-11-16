@@ -2,6 +2,7 @@ require 'slack-buggybot/issue-finder'
 require 'slack-buggybot/database'
 require 'slack-buggybot/models/event'
 require 'slack-buggybot/models/bug'
+require 'slack-buggybot/helpers'
 
 module SlackBuggybot
   module Commands
@@ -39,7 +40,7 @@ module SlackBuggybot
               Bug.new(event_id: event.id, url: url).save
             end
           end
-          message = "Started hackathon for #{user.real_name} with #{issues.length} issues!\n"
+          message = "Started hackathon for #{user.real_name} with #{issues.length} issues! #{random_emojis}\n"
           message += "Check out all the issues here: #{url}"
           client.say(channel: data.channel, text: message)
           client.say(channel: channel.id, text: message)

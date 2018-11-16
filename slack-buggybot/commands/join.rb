@@ -1,5 +1,6 @@
 require 'slack-buggybot/models/event'
 require 'slack-buggybot/models/bug'
+require 'slack-buggybot/helpers'
 
 module SlackBuggybot
   module Commands
@@ -26,7 +27,7 @@ module SlackBuggybot
               .save
             event_name = event.name_from_client(client)
             client.say(channel: data.channel, text: "You have joined #{event_name}!")
-            client.say(channel: event.channel_id, text: "<@#{data[:user]}> has joined #{event_name}, wish them luck!")
+            client.say(channel: event.channel_id, text: "#{random_fun_emoji} <@#{data[:user]}> has joined #{event_name}, wish them luck!")
             new_bug = Bug.ready.all.sample
             if new_bug.nil?
               client.say(channel: data.channel, text: "There are no more bugs!")

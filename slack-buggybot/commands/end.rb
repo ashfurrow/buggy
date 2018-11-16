@@ -2,6 +2,7 @@ require 'slack-buggybot/issue-finder'
 require 'slack-buggybot/database'
 require 'slack-buggybot/models/event'
 require 'slack-buggybot/models/bug'
+require 'slack-buggybot/helpers'
 
 module SlackBuggybot
   module Commands
@@ -15,7 +16,7 @@ module SlackBuggybot
         else
           event.update(end: Time.now.utc).save
           announcement = <<~EOS
-            #{event.name_from_client(client)} is over! Here is the final leaderboard (#{Bug.done_in_event(event.id).count} fixed, #{Bug.remaining_in_event(event.id).count} unfinished):
+            #{random_emojis} #{event.name_from_client(client)} is over! Here is the final leaderboard (#{Bug.done_in_event(event.id).count} fixed, #{Bug.remaining_in_event(event.id).count} unfinished):
             #{event.leaderboard_from_client(client)}
           EOS
           client.say(channel: event.channel_id, text: announcement)
