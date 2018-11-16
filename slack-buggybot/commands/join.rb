@@ -28,7 +28,7 @@ module SlackBuggybot
             event_name = event.name_from_client(client)
             client.say(channel: data.channel, text: "You have joined #{event_name}!")
             client.say(channel: event.channel_id, text: "#{random_fun_emoji} <@#{data[:user]}> has joined #{event_name}, wish them luck!")
-            new_bug = Bug.ready.all.sample
+            new_bug = Bug.ready_in_event(event.id).all.sample
             if new_bug.nil?
               client.say(channel: data.channel, text: "There are no more bugs!")
             else

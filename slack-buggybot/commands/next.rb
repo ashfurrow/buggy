@@ -55,7 +55,7 @@ module SlackBuggybot
           end
 
           # Assign them a new bug
-          new_bug = Bug.ready.all.sample
+          new_bug = Bug.ready_in_event(event.id).all.sample
           if new_bug.nil?
             client.say(channel: data.channel, text: "There are no more bugs!")
           else
