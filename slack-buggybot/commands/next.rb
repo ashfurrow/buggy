@@ -1,5 +1,6 @@
 require 'slack-buggybot/database'
 require 'slack-buggybot/models/event'
+require 'slack-buggybot/helpers'
 
 module SlackBuggybot
   module Commands
@@ -20,6 +21,7 @@ module SlackBuggybot
         # Parse their match.expression for the fate of their current bug
         fate = 'fixed'
         message = 'fixed'
+        emoji = random_fun_emoji
         case match[:expression]
         when 'fixed'
           # Nop, it's the default
@@ -36,6 +38,7 @@ module SlackBuggybot
           # Mark the bug as ready for someone else.
           fate = 'ready'
           message = 'is passing on'
+          emoji = ':soon:'
         when nil
           raise 'You need to give the status of your current bug to get a new one. Type `buggy next [fixed, docs, verified, interlinked, none]`'
         else
@@ -47,7 +50,7 @@ module SlackBuggybot
           current_bug = Bug.user_existing_bug(user_id: user.id, event_id: event.id)
           current_bug.update(state: fate, completed: DateTime.now.utc)
 
-          client.say(channel: event.channel_id, text: "<@#{data[:user]}> #{message} #{current_bug.url}")
+          client.say(channel: event.channel_id, text: "#{emoji} <@#{data[:user]}> #{message} #{current_bug.url}")
 
           # Assign them a new bug
           new_bug = Bug.ready.all.sample
