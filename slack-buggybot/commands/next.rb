@@ -58,7 +58,15 @@ module SlackBuggybot
             client.say(channel: data.channel, text: "There are no more bugs!")
           else
             new_bug.assign(user_id: user.id)
-            client.say(channel: data.channel, text: "Good work! Here's your next bug: #{new_bug.url}")
+            congrats = [
+              "Great work!",
+              "Well done!",
+              "Nice job!",
+              "Nice, keep it up!",
+              "Sweet!",
+              "Great job!"
+            ].sample
+            client.say(channel: data.channel, text: "#{congrats} Here's your next bug: #{new_bug.url}")
           end
         end
       rescue StandardError => e

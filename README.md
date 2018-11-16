@@ -18,7 +18,6 @@ Then run the server with `bundle exec puma`. It'll run a Sinatra server, but tha
 
 Left todo:
 
-- Make messages cuter
 - SlackRubyBot has built-in support for help menus, implement that.
 - Sentry integration
 - ...

@@ -3,5 +3,5 @@ def random_fun_emoji
 end
 
 def random_emojis
-  Array.new(rand(3..7)).map { random_fun_emoji }.join('')
+  Array.new(rand(3..5)).map { random_fun_emoji }.join('')
 end
