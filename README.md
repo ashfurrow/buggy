@@ -1,4 +1,4 @@
-# buggy
+# buggy [![Build Status](https://travis-ci.org/ashfurrow/buggy.svg?branch=master)](https://travis-ci.org/ashfurrow/buggy)
 
 A Slackbot that makes it easy to organize bug bashes. This is my Artsy 2018 Hackathon project.
 
