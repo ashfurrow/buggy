@@ -25,6 +25,8 @@ require 'slack-buggybot/database'
 database = Sequel.postgres
 database.extension :pg_enum
 database.extension :pg_array
+# We can't use a class double because the database is loaded outside
+# the rspec example lifecycle.
 SlackBuggybot::Database._db = database
 
 RSpec.configure do |config|
