@@ -15,9 +15,17 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require 'pathname'
-
+# Load everything from the root of the repo.
 ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 $LOAD_PATH.unshift(ROOT.to_s)
+
+# Stub the database with an in-memory store, configured with PG extensions.
+require 'sequel'
+require 'slack-buggybot/database'
+database = Sequel.postgres
+database.extension :pg_enum
+database.extension :pg_array
+SlackBuggybot::Database._db = database
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -41,6 +49,11 @@ RSpec.configure do |config|
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
+  end
+
+  # Wrap each example in a database transaction that is always rolled back.
+  config.around(:each) do |example|
+    database.transaction(:rollback => :always, :auto_savepoint => true){ example.run }
   end
 
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will

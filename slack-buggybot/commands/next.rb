@@ -1,5 +1,6 @@
 require 'slack-buggybot/database'
 require 'slack-buggybot/models/event'
+require 'slack-buggybot/models/bug'
 require 'slack-buggybot/helpers'
 
 module SlackBuggybot

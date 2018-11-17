@@ -134,6 +134,7 @@ DEPENDENCIES
   rack-test
   rake (~> 10.4)
   rspec
+  rspec-mocks
   rubocop (= 0.31.0)
   sequel
   sinatra
