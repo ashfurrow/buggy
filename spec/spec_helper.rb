@@ -29,6 +29,11 @@ database.extension :pg_array
 # the rspec example lifecycle.
 SlackBuggybot::Database._db = database
 
+# Constants used across all examples.
+OWNER_ID = "ABCDEF1234"
+USER_ID = "ZYXWVU9876"
+CHANNEL_ID = "FFFF42069"
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest

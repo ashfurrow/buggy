@@ -25,7 +25,6 @@ module SlackBuggybot
     end
 
     def self.user_existing_bug(user_id:, event_id:)
-      # binding.irb
       Bug.in_event(event_id).where(completed: nil).where(assignee: user_id).first
     end
 
@@ -35,7 +34,6 @@ module SlackBuggybot
 
     # Instance methods
     def assign(user_id:)
-      # binding.irb
       self.update(assignee: user_id, state: 'wip')
       self.save
     end
