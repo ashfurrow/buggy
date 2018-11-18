@@ -53,24 +53,28 @@ module SlackBuggybot
           current_bug = Bug.user_existing_bug(user_id: user.id, event_id: event.id)
           unless current_bug.nil?
             # They should always have a bug, but just in case ...
-            current_bug.update(state: fate, completed: DateTime.now.utc)
+            current_bug.update(state: fate, completed: Time.now.utc)
             client.say(channel: event.channel_id, text: "#{emoji} <@#{data[:user]}> #{message} #{current_bug.url}")
           end
 
           # Assign them a new bug
           new_bug = Bug.ready_in_event(event.id).all.sample
           if new_bug.nil?
-            client.say(channel: data.channel, text: "There are no more bugs!")
+            client.say(channel: data.channel, text: 'There are no more bugs!')
           else
             new_bug.assign(user_id: user.id)
-            congrats = match[:expression] == 'none' ? 'No problem.' : [
-              "Great work!",
-              "Well done!",
-              "Nice job!",
-              "Nice, keep it up!",
-              "Sweet!",
-              "Great job!"
-            ].sample
+            congrats = if match[:expression] == 'none'
+                         'No problem.'
+                       else
+                         [
+                           'Great work!',
+                           'Well done!',
+                           'Nice job!',
+                           'Nice, keep it up!',
+                           'Sweet!',
+                           'Great job!'
+                         ].sample
+                       end
             client.say(channel: data.channel, text: "#{congrats} Here's your next bug: #{new_bug.url}")
           end
         end

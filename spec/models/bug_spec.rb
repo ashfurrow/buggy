@@ -10,18 +10,19 @@ describe SlackBuggybot::Bug do
 
   describe 'instances methods' do
     it '#assign sets the assignee and state' do
-      subject = SlackBuggybot::Bug.new(event_id: @event.id, url: "http://example.com")
+      subject = SlackBuggybot::Bug.new(event_id: @event.id, url: 'http://example.com')
       subject.assign(user_id: USER_ID)
+
       expect(subject.assignee) == USER_ID
-      expect(subject.state) == "wip"
+      expect(subject.state) == 'wip'
     end
   end
 
   describe 'class methods' do
     describe 'with existing bugs in the db' do
-      before do 
+      before do
         @bugs = Array.new(10).map do
-          SlackBuggybot::Bug.new(event_id: @event.id, url: "http://example.com")
+          SlackBuggybot::Bug.new(event_id: @event.id, url: 'http://example.com')
         end
         @bugs[0].assign(user_id: USER_ID)
         @bugs[1].update(assignee: USER_ID, completed: Time.now.utc, state: 'fixed')

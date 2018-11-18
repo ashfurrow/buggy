@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-directories %w(slack-buggybot spec) \
- .select{|d| Dir.exist?(d) ? d : UI.warning("Directory #{d} does not exist")}
+directories %w[slack-buggybot spec] \
+  .select { |d| Dir.exist?(d) ? d : UI.warning("Directory #{d} does not exist") }
 
-guard :rspec, cmd: "bundle exec rspec" do
-  require "guard/rspec/dsl"
+guard :rspec, cmd: 'bundle exec rspec' do
+  require 'guard/rspec/dsl'
   dsl = Guard::RSpec::Dsl.new(self)
 
   # RSpec files

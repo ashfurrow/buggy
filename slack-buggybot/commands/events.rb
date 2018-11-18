@@ -7,7 +7,7 @@ module SlackBuggybot
   module Commands
     class Events < SlackRubyBot::Commands::Base
       def self.call(client, data, _match)
-        if Event.open.count == 0
+        if Event.open.count.positive?
           client.say(channel: data.channel, text: 'There are no events right now. Start one with `buggy start`.')
           return
         end
@@ -15,7 +15,6 @@ module SlackBuggybot
           Current events:
         EOS
         Event.open.each do |e|
-          owner = client.users[e.owner]
           table += "#{e.pk} | #{e.name_from_client(client)} | #{Bug.ready_in_event(e.id).count} ready bugs"
         end
         client.say(channel: data.channel, text: table)

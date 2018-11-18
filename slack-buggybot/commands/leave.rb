@@ -5,7 +5,7 @@ require 'slack-buggybot/models/event'
 module SlackBuggybot
   module Commands
     class Leave < SlackRubyBot::Commands::Base
-      def self.call(client, data, match)
+      def self.call(client, data, _match)
         user = client.users[data[:user]]
 
         existing_event = Event.user_current_event(user_id: user.id)

@@ -8,7 +8,7 @@ SlackBuggybot::Database.database
 module SlackBuggybot
   class Event < Sequel::Model
     def self.open
-      self.where(end: nil)
+      where(end: nil)
     end
 
     def self.user_current_event(user_id:)
@@ -18,39 +18,39 @@ module SlackBuggybot
     def self.find_from_match(match)
       case Event.open.count
       when 0
-        return nil
+        nil
       when 1
-        return Event.open.all.first
+        Event.open.all.first
       else
         if match[:expression].nil?
-          return nil
+          nil
         else
           pk = match[:expression].to_i
-          return Event.open[pk]
+          Event.open[pk]
         end
       end
     end
 
     # Instance methods
     def name_from_client(client)
-      owner_user = client.users[self.owner]
+      owner_user = client.users[owner]
       "#{owner_user.real_name}'s bug bash"
     end
 
     def sorted_users_and_points_from_client(client)
       users
         .map { |u| client.users[u] }
-        .map { |u| [u, Bug.user_finished_bugs(user_id: u.id, event_id: self.id).count]}
-        .sort { |l, r| l[1] <=> r[1] }
+        .map { |u| [u, Bug.user_finished_bugs(user_id: u.id, event_id: id).count] }
+        .sort_by { |a| a[1] }
         .reverse
     end
 
     def leaderboard_from_client(client)
-      self.sorted_users_and_points_from_client(client).map { |a| "#{a[0].real_name}: #{a[1]} point#{a[1] == 1 ? '' : 's'}" }.join("\n")
+      sorted_users_and_points_from_client(client).map { |a| "#{a[0].real_name}: #{a[1]} point#{a[1] == 1 ? '' : 's'}" }.join("\n")
     end
 
     def winning_result_from_client(client)
-      top_result = self.sorted_users_and_points_from_client(client).first
+      sorted_users_and_points_from_client(client).first
     end
   end
 end
