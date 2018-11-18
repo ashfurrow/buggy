@@ -16,7 +16,3 @@ Lint/EmptyWhen:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*.rb
-
-Lint/Void:
-  Exclude:
-    - spec/**/*.rb  

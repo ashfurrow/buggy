@@ -4,23 +4,23 @@ require 'slack-buggybot/models/bug'
 require 'slack-buggybot/models/event'
 
 describe SlackBuggybot::Bug do
-  before do
+  before(:each) do
     @event = SlackBuggybot::Event.new(start: Time.now.utc, owner: OWNER_ID, channel_id: CHANNEL_ID)
   end
 
   describe 'instances methods' do
     it '#assign sets the assignee and state' do
-      subject = SlackBuggybot::Bug.new(event_id: @event.id, url: 'http://example.com')
+      subject = SlackBuggybot::Bug.new(event_id: @event.id, url: 'http://example.com').save
       subject.assign(user_id: USER_ID)
 
-      expect(subject.assignee) == USER_ID
-      expect(subject.state) == 'wip'
+      expect(subject.assignee).to eq(USER_ID)
+      expect(subject.state).to eq('wip')
     end
   end
 
   describe 'class methods' do
     describe 'with existing bugs in the db' do
-      before do
+      before(:each) do
         @bugs = Array.new(10).map do
           SlackBuggybot::Bug.new(event_id: @event.id, url: 'http://example.com')
         end
@@ -28,6 +28,7 @@ describe SlackBuggybot::Bug do
         @bugs[1].update(assignee: USER_ID, completed: Time.now.utc, state: 'fixed')
         @bugs[2].update(assignee: USER_ID, completed: Time.now.utc, state: 'added_docs')
         @bugs[3].update(assignee: USER_ID, completed: Time.now.utc, state: 'verified')
+        @bugs.map(&:save)
       end
 
       it '#in_event has correct count' do
