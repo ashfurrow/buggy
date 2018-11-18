@@ -1,0 +1,18 @@
+AllCops:
+  TargetRubyVersion: 2.5.3
+
+inherit_from: .rubocop_todo.yml
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'Guardfile'
+
+Style/Documentation:
+  Enabled: false
+
+Lint/EmptyWhen:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*.rb

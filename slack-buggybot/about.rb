@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SlackBuggybot
   ABOUT = <<~EOS
     Buggybot (#{SlackBuggybot::VERSION})

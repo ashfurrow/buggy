@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'slack-buggybot/models/event'
 require 'slack-buggybot/models/bug'
 require 'slack-buggybot/helpers'
@@ -14,13 +16,16 @@ module SlackBuggybot
           return
         end
 
-        unless Event.open.count > 0
+        unless Event.open.count.positive?
           client.say(channel: data.channel, text: 'There are no events right now. Start one with `buggy start`.')
           return
         end
 
         event = Event.find_from_match(match)
-        unless event.nil?
+        if event.nil?
+          client.say(channel: data.channel, text: "Couldn't find an event with id #{match[:expression]}.")
+          SlackBuggybot::Commands::Events.call(client, data, match)
+        else
           SlackBuggybot::Database.database.transaction do
             event
               .update(users: event.users + [user.id])
@@ -30,15 +35,12 @@ module SlackBuggybot
             client.say(channel: event.channel_id, text: "#{random_fun_emoji} <@#{data[:user]}> has joined #{event_name}, wish them luck!")
             new_bug = Bug.ready_in_event(event.id).all.sample
             if new_bug.nil?
-              client.say(channel: data.channel, text: "There are no more bugs!")
+              client.say(channel: data.channel, text: 'There are no more bugs!')
             else
               new_bug.assign(user_id: user.id)
               client.say(channel: data.channel, text: "Welcome aboard! Here's your first bug: #{new_bug.url}")
             end
           end
-        else
-          client.say(channel: data.channel, text: "Couldn't find an event with id #{match[:expression]}.")
-          SlackBuggybot::Commands::Events.call(client, data, match)
         end
       rescue StandardError => e
         client.say(channel: data.channel, text: "Sorry, an oop happened: #{e.message}.")
