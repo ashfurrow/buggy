@@ -25,6 +25,7 @@ describe SlackBuggybot::Event do
 
       describe '#find_from_match' do
         it 'returns nil when there are no open events' do
+          
         end
         it 'returns the first event when there are only one events in progress' do
         end
