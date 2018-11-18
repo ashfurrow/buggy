@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'slack-buggybot/issue-finder'
 require 'slack-buggybot/database'
 require 'slack-buggybot/models/event'

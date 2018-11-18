@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'slack-buggybot/issue-finder'
 require 'slack-buggybot/database'
 require 'slack-buggybot/models/event'
@@ -7,7 +9,7 @@ require 'slack-buggybot/helpers'
 module SlackBuggybot
   module Commands
     class End < SlackRubyBot::Commands::Base
-      def self.call(client, data, match)
+      def self.call(client, data, _match)
         user = client.users[data[:user]]
 
         event = Event.open.where(owner: user.id).first

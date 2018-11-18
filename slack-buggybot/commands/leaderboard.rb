@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'slack-buggybot/models/event'
 require 'slack-buggybot/models/bug'
 
@@ -16,12 +18,12 @@ module SlackBuggybot
           client.say(channel: data.channel, text: "Couldn't find event to print leaderboard.")
           return
         end
-        
+
         message = <<~EOS
-        Leaderboard for #{event.name_from_client(client)} (#{Bug.done_in_event(event.id).count} fixed, #{Bug.remaining_in_event(event.id).count} remaining):
-        #{event.leaderboard_from_client(client)}
+          Leaderboard for #{event.name_from_client(client)} (#{Bug.done_in_event(event.id).count} fixed, #{Bug.remaining_in_event(event.id).count} remaining):
+          #{event.leaderboard_from_client(client)}
         EOS
-        
+
         client.say(channel: data.channel, text: message)
       rescue StandardError => e
         client.say(channel: data.channel, text: "Sorry, an oop happened: #{e.message}.")

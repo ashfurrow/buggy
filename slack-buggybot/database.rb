@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sequel'
 
 # Taken originally from https://github.com/KrauseFx/mood/blob/master/database.rb

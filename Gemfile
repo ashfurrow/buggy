@@ -16,10 +16,10 @@ gem 'sequel'
 
 group :development, :test do
   gem 'rake', '~> 10.4'
-  gem 'rubocop', '0.31.0'
-  gem 'foreman'
+  gem 'foreman', require: false
   gem 'guard', require: false
   gem 'guard-rspec', require: false
+  gem 'rubocop', require: false
 end
 
 group :test do

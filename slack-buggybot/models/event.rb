@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'slack-buggybot/database'
 require 'slack-buggybot/helpers'
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SlackBuggybot
   module Commands
     class About < SlackRubyBot::Commands::Base

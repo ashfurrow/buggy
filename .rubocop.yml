@@ -1,0 +1,10 @@
+AllCops:
+  TargetRubyVersion: 2.5.3
+
+inherit_from: .rubocop_todo.yml
+
+Style/Documentation:
+  Enabled: false
+
+Naming/HeredocDelimiterNaming:
+  Enabled: false
