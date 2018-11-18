@@ -169,6 +169,7 @@ DEPENDENCIES
   guard-rspec
   octokit (~> 4.0)
   pg
+  pry
   puma
   rack-test
   rake (~> 10.4)

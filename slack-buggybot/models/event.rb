@@ -37,20 +37,21 @@ module SlackBuggybot
       "#{owner_user.real_name}'s bug bash"
     end
 
-    def sorted_users_and_points_from_client(client)
-      users
-        .map { |u| client.users[u] }
-        .map { |u| [u, Bug.user_finished_bugs(user_id: u.id, event_id: id).count] }
-        .sort_by { |a| a[1] }
-        .reverse
-    end
-
     def leaderboard_from_client(client)
       sorted_users_and_points_from_client(client).map { |a| "#{a[0].real_name}: #{a[1]} point#{a[1] == 1 ? '' : 's'}" }.join("\n")
     end
 
     def winning_result_from_client(client)
       sorted_users_and_points_from_client(client).first
+    end
+
+    private
+    def sorted_users_and_points_from_client(client)
+      users
+        .map { |u| client.users[u] }
+        .map { |u| [u, Bug.user_finished_bugs(user_id: u.id, event_id: id).count] }
+        .sort_by { |a| a[1] }
+        .reverse
     end
   end
 end

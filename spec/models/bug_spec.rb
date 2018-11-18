@@ -19,7 +19,7 @@ describe SlackBuggybot::Bug do
   end
 
   describe 'class methods' do
-    describe 'with existing bugs in the db' do
+    context 'with existing bugs in the db' do
       before(:each) do
         @bugs = Array.new(10).map do
           SlackBuggybot::Bug.new(event_id: @event.id, url: 'http://example.com')

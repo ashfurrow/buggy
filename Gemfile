@@ -18,6 +18,7 @@ group :development, :test do
   gem 'foreman', require: false
   gem 'guard', require: false
   gem 'guard-rspec', require: false
+  gem 'pry'
   gem 'rake', '~> 10.4'
   gem 'rubocop', require: false
 end
