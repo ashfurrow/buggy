@@ -1,6 +1,6 @@
 # buggy [![Build Status](https://travis-ci.org/ashfurrow/buggy.svg?branch=master)](https://travis-ci.org/ashfurrow/buggy)
 
-A Slackbot that makes it easy to organize bug bashes. This is my Artsy 2018 Hackathon project.
+A Slackbot that makes it easy to organize bug bashes. This is my Artsy 2018 Hackathon project. It's still a work-in-progress.
 
 ## Setup
 
@@ -15,13 +15,6 @@ export JIRA_TOKEN='Token in 1Password' # See docs for token creation: https://co
 ```
 
 Then run the server with `bundle exec puma`. It'll run a Sinatra server, but that's only to play nicely with Heroku. In reality, a thread has been spawned to connect to your Slack instance.
-
-Left todo:
-
-- SlackRubyBot has built-in support for help menus, implement that.
-- Sentry integration
-- ...
-- Unit tests
 
 ## Resources
 
