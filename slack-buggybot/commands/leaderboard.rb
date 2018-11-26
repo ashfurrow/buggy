@@ -27,6 +27,7 @@ module SlackBuggybot
         client.say(channel: data.channel, text: message)
       rescue StandardError => e
         client.say(channel: data.channel, text: "Sorry, an oop happened: #{e.message}.")
+        STDERR.puts e.backtrace
       end
     end
   end
