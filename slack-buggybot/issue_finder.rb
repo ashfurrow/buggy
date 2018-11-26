@@ -2,6 +2,7 @@
 
 require 'slack-buggybot/issue-finders/github'
 require 'slack-buggybot/issue-finders/jira'
+require 'English'
 
 module SlackBuggybot
   class IssueFinder
