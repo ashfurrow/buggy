@@ -28,16 +28,20 @@ module SlackBuggybot
         case match[:expression]
         when 'fixed'
           # Nop, it's the default
+          emoji = ':party-cat:'
         when 'docs'
           fate = 'added_docs'
           message = 'added docs to'
+          emoji = ':writing_hand:'
         when 'verified'
           fate = 'verified'
           message = 'verified the existence of'
+          emoji = ':110:'
         when 'interlinked'
           fate = 'interlinked'
           message = 'added context to'
-        when 'none'
+          emoji = ':link:'
+        when 'skip'
           # Mark the bug as ready for someone else.
           fate = 'ready'
           message = 'is passing on'
