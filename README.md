@@ -12,7 +12,7 @@ buggy
 > `buggy end` # ends your bug bash.
 > `buggy events` # lists all current bug bashes.
 > `buggy leaderboard [ID]` # Prints the leaderboard with that ID (ID is optional if you are in the event or started it).
-> `buggy next [fixed, skip, docs, verified, interlinked, none]` # Gets your next bug
+> `buggy next [fixed, skip, docs, verified, interlinked]` # Gets your next bug
 > - `fixed`: you fixed the bug.
 > - `skip`: you didn't do anything and just want a different bug.
 > - `docs`: you added some docs or resources to help someone else fix it.
