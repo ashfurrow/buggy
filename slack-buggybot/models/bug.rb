@@ -31,7 +31,7 @@ module SlackBuggybot
     end
 
     def self.user_finished_bugs(user_id:, event_id:)
-      Bug.in_event(event_id).where(assignee: user_id).where(Sequel.~(completed: nil))
+      Bug.done_in_event(event_id).where(assignee: user_id)
     end
 
     # Instance methods
