@@ -58,6 +58,7 @@ module SlackBuggybot
           unless current_bug.nil?
             # They should always have a bug, but just in case ...
             current_bug.update(state: fate, completed: Time.now.utc)
+            current_bug.save
             client.say(channel: event.channel_id, text: "#{emoji} <@#{data[:user]}> #{message} #{current_bug.url}")
           end
 
@@ -67,7 +68,7 @@ module SlackBuggybot
             client.say(channel: data.channel, text: 'There are no more bugs!')
           else
             new_bug.assign(user_id: user.id)
-            congrats = if match[:expression] == 'none'
+            congrats = if match[:expression] == 'skip'
                          'No problem.'
                        else
                          [
