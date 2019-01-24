@@ -47,7 +47,7 @@ module SlackBuggybot
           message = 'is passing on'
           emoji = ':soon:'
         when nil
-          raise 'You need to give the status of your current bug to get a new one. Type `buggy next [fixed, docs, verified, interlinked, none]`'
+          raise 'You need to give the status of your current bug to get a new one. Type `buggy next [fixed, docs, verified, interlinked, skip]`'
         else
           raise 'You need to provide a status in `[fixed, docs, verified, interlinked, none]`'
         end
